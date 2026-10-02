@@ -10,6 +10,7 @@ import java.util.List;
 public class UserServiceIMPL implements  UserService{
 
     private List<User> userList= new ArrayList<>();
+    private Long nextId=1L;
 
     @Override
     public List<User> fetchAllUsers() {
@@ -18,6 +19,7 @@ public class UserServiceIMPL implements  UserService{
 
     @Override
     public void addUsers(User user) {
+        user.setId(nextId++);
         userList.add(user);
     }
 }

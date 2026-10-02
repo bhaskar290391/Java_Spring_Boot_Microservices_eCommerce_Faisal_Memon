@@ -22,4 +22,16 @@ public class UserServiceIMPL implements  UserService{
         user.setId(nextId++);
         userList.add(user);
     }
+
+    @Override
+    public User fetchUser(Long id) {
+
+        for (User user : userList){
+            if(user.getId().equals(id)){
+                return  user;
+            }
+        }
+
+        return null;
+    }
 }

@@ -3,6 +3,7 @@ package com.app.ecom.service;
 import com.app.ecom.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -10,5 +11,5 @@ public interface UserService {
 
     public void addUsers(User user);
 
-    public User fetchUser(Long id);
+    public Optional<User> fetchUser(Long id);
 }

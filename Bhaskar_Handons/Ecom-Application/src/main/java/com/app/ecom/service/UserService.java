@@ -12,4 +12,6 @@ public interface UserService {
     public void addUsers(User user);
 
     public Optional<User> fetchUser(Long id);
+
+    boolean updateUser(Long id, User updatedUser);
 }

@@ -16,3 +16,10 @@ https://github.com/EmbarkXOfficial/ecom-microservices
 
 #Springboot Common properties
 https://docs.spring.io/spring-boot/appendix/application-properties/index.html
+
+
+#H2 dependencies for Spring boot 4
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-h2console</artifactId>
+</dependency>

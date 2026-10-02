@@ -1,5 +1,6 @@
 package com.app.ecom.service;
 
+import com.app.ecom.dao.UserRepository;
 import com.app.ecom.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -10,18 +11,20 @@ import java.util.Optional;
 @Service
 public class UserServiceIMPL implements  UserService{
 
-    private List<User> userList= new ArrayList<>();
-    private Long nextId=1L;
+    private final UserRepository userRepository;
+
+    public UserServiceIMPL(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<User> fetchAllUsers() {
-        return userList;
+        return userRepository.findAll();
     }
 
     @Override
     public void addUsers(User user) {
-        user.setId(nextId++);
-        userList.add(user);
+        userRepository.save(user);
     }
 
     @Override
@@ -38,15 +41,16 @@ public class UserServiceIMPL implements  UserService{
 
 
         */
-        return  userList.stream().filter(user -> user.getId().equals(id)).findFirst();
+        return  userRepository.findById(id);
     }
 
     @Override
     public boolean updateUser(Long id, User updatedUser) {
-        return userList.stream().filter(user -> user.getId().equals(id)).findFirst().map(existingUser ->{
 
+        return userRepository.findById(id).map(existingUser ->{
             existingUser.setFirstName(updatedUser.getFirstName());
             existingUser.setLastName(updatedUser.getLastName());
+            userRepository.save(existingUser);
             return true;
         }).orElse(false);
     }

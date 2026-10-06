@@ -1,5 +1,6 @@
 package com.app.ecom.entity;
 
+import com.app.ecom.dto.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,10 @@ public class User {
     private String firstName;
 
     private String lastName;
+
+    private String email;
+
+    private String phone;
+
+    private UserRole role= UserRole.CUSTOMER;
 }

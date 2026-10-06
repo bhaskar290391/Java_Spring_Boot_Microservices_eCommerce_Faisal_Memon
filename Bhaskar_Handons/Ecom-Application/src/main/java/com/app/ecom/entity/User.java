@@ -1,6 +1,6 @@
 package com.app.ecom.entity;
 
-import com.app.ecom.dto.UserRole;
+import com.app.ecom.Model.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +31,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id",name="Address_id")
-    private Addresses address;
+    private Address address;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

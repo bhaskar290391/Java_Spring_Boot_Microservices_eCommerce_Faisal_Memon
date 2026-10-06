@@ -1,5 +1,7 @@
 package com.app.ecom.controller;
 
+import com.app.ecom.dto.UserRequest;
+import com.app.ecom.dto.UserResponse;
 import com.app.ecom.entity.User;
 import com.app.ecom.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -21,25 +23,25 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUserList(){
+    public ResponseEntity<List<UserResponse>> getUserList(){
         return  new ResponseEntity<>(userService.fetchAllUsers(),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id){
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id){
         return  userService.fetchUser(id)
                  .map(ResponseEntity::ok)
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody User user){
+    public ResponseEntity<String> createUser(@RequestBody UserRequest user){
         userService.addUsers(user);
         return new ResponseEntity<>("User added Successfully", HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id,@RequestBody User updatedUser){
+    public ResponseEntity<String> updateUser(@PathVariable Long id,@RequestBody UserRequest updatedUser){
 
         boolean updated=userService.updateUser(id,updatedUser);
 

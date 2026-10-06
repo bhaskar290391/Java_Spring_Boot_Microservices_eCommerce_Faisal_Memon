@@ -9,8 +9,8 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "addresses")
-public class Addresses {
+@Table(name = "address")
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

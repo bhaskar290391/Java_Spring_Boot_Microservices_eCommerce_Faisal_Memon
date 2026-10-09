@@ -6,7 +6,9 @@ import com.app.ecom.dto.ProductResponse;
 import com.app.ecom.entity.Product;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceIMPL implements  ProductService{
@@ -39,6 +41,25 @@ public class ProductServiceIMPL implements  ProductService{
 
     }
 
+    @Override
+    public List<ProductResponse> fetchAllProducts() {
+        return repository.findByActiveTrue().stream().map(this::mappingProductToProductResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean deleteProduct(long id) {
+        return repository.findById(id).map(product -> {
+            product.setActive(false);
+            repository.save(product);
+            return  true;
+        }).orElse(false);
+    }
+
+    @Override
+    public List<ProductResponse> searchProducts(String keywords) {
+        return repository.searchProduct(keywords).stream().map(this::mappingProductToProductResponse).collect(Collectors.toList());
+    }
+
     private ProductResponse mappingProductToProductResponse(Product data) {
 
         ProductResponse response = new ProductResponse();
@@ -51,6 +72,7 @@ public class ProductServiceIMPL implements  ProductService{
         response.setActive(data.getActive());
         response.setCreatedAt(data.getCreatedAt());
         response.setUpdatedAt(data.getUpdatedAt());
+        response.setCategory(data.getCategory());
         return  response ;
     }
 

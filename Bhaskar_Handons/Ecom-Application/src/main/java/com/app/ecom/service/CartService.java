@@ -12,4 +12,6 @@ public interface CartService {
     public List<CartItem> fetchCartItems(long UserId);
 
     public boolean removeItemFromCart(String userid,long productId);
+
+    void clearCart(long userId);
 }

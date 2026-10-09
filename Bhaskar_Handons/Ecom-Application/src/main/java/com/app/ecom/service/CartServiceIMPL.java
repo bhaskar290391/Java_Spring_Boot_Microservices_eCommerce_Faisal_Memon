@@ -88,4 +88,9 @@ public class CartServiceIMPL implements CartService{
 
         return false;
     }
+
+    @Override
+    public void clearCart(long userId) {
+        userRepo.findById(userId).ifPresent(CartItemRepository::deleteByUser);
+    }
 }

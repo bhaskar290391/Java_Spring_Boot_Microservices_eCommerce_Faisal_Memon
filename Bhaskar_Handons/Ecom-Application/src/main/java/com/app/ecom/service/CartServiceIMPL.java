@@ -7,12 +7,15 @@ import com.app.ecom.dto.CartItemRequest;
 import com.app.ecom.entity.CartItem;
 import com.app.ecom.entity.Product;
 import com.app.ecom.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class CartServiceIMPL implements CartService{
 
     private final ProductRepository productRepo;
@@ -63,5 +66,26 @@ public class CartServiceIMPL implements CartService{
         }
 
         return true;
+    }
+
+    @Override
+    public List<CartItem> fetchCartItems(long userId) {
+       return userRepo.findById(userId).map(cartRepo::findByUser).orElse(List.of());
+
+    }
+
+    @Override
+    public boolean removeItemFromCart(String userid, long productId) {
+
+        Optional<Product> productOpt= productRepo.findById(productId);
+
+        Optional<User> userOpt=userRepo.findById(Long.valueOf(userid));
+
+        if(userOpt.isPresent() && productOpt.isPresent()){
+            cartRepo.deleteByUserAndProduct(userOpt.get(),productOpt.get());
+            return  true;
+        }
+
+        return false;
     }
 }
